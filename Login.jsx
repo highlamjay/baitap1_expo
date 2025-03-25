@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
 import {
   View,
@@ -6,15 +7,19 @@ import {
   TouchableOpacity,
   StyleSheet,
   Alert,
+  Keyboard,
 } from 'react-native';
 
-const Login = ({ navigation }) => {
+const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const navigation = useNavigation();
+
   const handleLogin = () => {
-    if (email === 'user@gmail.com' && password === '123456') {
-      navigation.navigate('Welcome');
+    Keyboard.dismiss();
+    if (email.trim() === 'user@gmail.com' && password.trim() === '123456') {
+      navigation.navigate('ClassRoom');
     } else {
       Alert.alert('Email or password incorrect');
     }
@@ -31,6 +36,7 @@ const Login = ({ navigation }) => {
           placeholderTextColor="#003f5c"
           keyboardType="email-address"
           autoCapitalize="none"
+          value={email}
           onChangeText={setEmail}
         />
       </View>
@@ -42,6 +48,7 @@ const Login = ({ navigation }) => {
           placeholderTextColor="#003f5c"
           keyboardType='numeric'
           secureTextEntry
+          value={password}
           onChangeText={setPassword}
         />
       </View>
