@@ -1,5 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import { FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { getMoviesFromApi } from "./fetchAPI";
 
 const data = [
     {id: "SE346.P21", room: "B4.16", subject: "Lập trình thiết bị di động", lesson: "Thứ 3, tiết 1-4", lecturer: "Nguyễn Tấn Toàn"},
@@ -9,6 +10,9 @@ const data = [
 ]
 
 const ClassRoom = () => {
+
+    
+    const fetchAPI = getMoviesFromApi();
 
     const navigation = useNavigation();
 

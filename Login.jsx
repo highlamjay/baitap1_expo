@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -9,20 +9,40 @@ import {
   Alert,
   Keyboard,
 } from 'react-native';
+import { getMoviesFromApi } from './fetchAPI';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const [employees, setEmployees] = useState([]);
+
+  const getAllEmployee = async () => {
+          try {
+              const response = await fetch('http://blackntt.net:88/api/v1/employees');
+              const data = await response.json();
+              setEmployees(data);
+          } catch (error) {
+              console.error('Lỗi khi gọi API:', error);
+          }
+      }
+  
+      useEffect(() => {
+          getAllEmployee();
+      }, [])
+  
+
   const navigation = useNavigation();
 
   const handleLogin = () => {
     Keyboard.dismiss();
-    if (email.trim() === 'user@gmail.com' && password.trim() === '123456') {
-      navigation.navigate('ClassRoom');
-    } else {
-      Alert.alert('Email or password incorrect');
-    }
+    employees.map((employee, index) => {
+      if (email === employee.id){
+        navigation.navigate("EmployeePage")
+      } else {
+        console.log("Khong ton tai ID");
+      }
+    })
   };
 
   return (
